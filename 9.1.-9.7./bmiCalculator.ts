@@ -11,10 +11,10 @@ const parseArguments1 = (args: Array<string>): MultiplyValues1 => {
     }
     return args
         .filter((arg) => !isNaN(Number(arg)))
-        .map((arg) => Number(arg))
-}
+        .map((arg) => Number(arg));
+};
 
-const calculateBmi = (height: number, weight: number): Result1 => {
+export const calculateBmi = (height: number, weight: number): Result1 => {
     const bmi = (weight / ((height / 100) ** 2));
     //console.log(bmi)
     if (bmi < 15) {
@@ -32,19 +32,19 @@ const calculateBmi = (height: number, weight: number): Result1 => {
     } else if (bmi < 40) {
         return 'Obese Class II (Severely obese)';
     } else {
-        return 'Obese Class III (Very severely obese)'
+        return 'Obese Class III (Very severely obese)';
     }
-}
+};
 
 
 try {
     const [value1, value2] = parseArguments1(process.argv);
     console.log('VALUES:', value1, value2);
-    console.log(calculateBmi(value1, value2))
+    console.log(calculateBmi(value1, value2));
 } catch (e) {
     console.log('Error, something bad happened, message: ', e.message);
 }
 
 //console.log(calculateBmi(180, 74))
 
-module.exports = calculateBmi
+//calculateExercisesmodule.exports = calculateBmi;
