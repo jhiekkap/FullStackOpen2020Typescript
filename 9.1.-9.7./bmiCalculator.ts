@@ -47,3 +47,4 @@ try {
 
 //console.log(calculateBmi(180, 74))
 
+module.exports = calculateBmi
