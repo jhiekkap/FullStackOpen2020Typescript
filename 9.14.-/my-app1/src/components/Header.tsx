@@ -1,7 +1,7 @@
 import React from "react";
-import { CourseNameProps } from '../types'
+import { CourseName } from '../types'
 
-const Header: React.FC<CourseNameProps> = (props) => {
+const Header: React.FC<CourseName> = (props) => {
     return <h1>{props.courseName}</h1>
 }
 
