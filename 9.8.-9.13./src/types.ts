@@ -4,7 +4,7 @@ export interface Diagnose {
     latin?: string;
 }
 
-export interface Entry {
+export interface Entry { 
 }
  
 export interface PatientEntry {

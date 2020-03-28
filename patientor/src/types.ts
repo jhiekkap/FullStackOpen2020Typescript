@@ -10,8 +10,8 @@ export enum Gender {
   Other = "other"
 }
 
-export interface Patient {
-  id: string;
+export interface Patient { 
+  id: string | any;
   name: string;
   occupation: string;
   gender: Gender;

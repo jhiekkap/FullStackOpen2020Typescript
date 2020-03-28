@@ -10,7 +10,7 @@ const getEntries = (): Array<PatientEntry> => {
 };
 
 const getEntryById = (id:string): PatientEntry | undefined=> {
-    return patients.find(patient => patient.id === id);
+    return patients.find(patient => patient.id === id); 
 };
 
 const getNonSensitiveEntries = (): NonSensitivePatientEntry[] => {

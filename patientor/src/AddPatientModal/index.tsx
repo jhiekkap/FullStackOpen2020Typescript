@@ -3,7 +3,7 @@ import { Modal, Segment } from 'semantic-ui-react';
 import AddPatientForm, { PatientFormValues } from './AddPatientForm';
 
 interface Props {
-  modalOpen: boolean;
+  modalOpen: boolean; 
   onClose: () => void;
   onSubmit: (values: PatientFormValues) => void;
   error?: string;
