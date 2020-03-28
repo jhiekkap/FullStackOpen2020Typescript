@@ -23,10 +23,6 @@ const parseDateOfBirth = (dateOfBirth: any): string => {
     return dateOfBirth;
 };
 
-/* const isWeather = (param: any): param is Weather => {
-    return Object.values(Weather).includes(param);
-}; */
-
 const parseSsn = (ssn: any): string => {
     if (!ssn || !isString(ssn)) {
         throw new Error('Incorrect or missing ssn: ' + ssn)

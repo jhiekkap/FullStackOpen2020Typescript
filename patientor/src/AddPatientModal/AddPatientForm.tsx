@@ -18,7 +18,7 @@ interface Props {
 
 const genderOptions: GenderOption[] = [
   { value: Gender.Male, label: "Male" },
-  { value: Gender.Female, label: "Female" },
+  { value: Gender.Female, label: "Female" }, 
   { value: Gender.Other, label: "Other" }
 ];
 
