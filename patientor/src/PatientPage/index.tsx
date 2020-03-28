@@ -15,9 +15,7 @@ const PatientPage: React.FC = () => {
 
   let { id }: any = useParams();
   const patient: Patient | undefined = Object.values(patients).find((patient: Patient) => patient.id === id);
- 
-  console.log('PATIENT ', patient)
-  console.log('PATIENTS', patients)
+  
   if (patient) {
     return (
       <div className="App">
@@ -29,27 +27,7 @@ const PatientPage: React.FC = () => {
           <p>ssn: {patient.ssn}</p>
           <p>occupation: {patient.occupation}</p>
           <span>health rating: <HealthRatingBar showText={false} rating={1} /></span>
-        </Container>
-        {/* <Table celled>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>Name</Table.HeaderCell>
-              <Table.HeaderCell>Gender</Table.HeaderCell>
-              <Table.HeaderCell>Occupation</Table.HeaderCell>
-              <Table.HeaderCell>Health Rating</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            <Table.Row key={patient.id}>
-              <Table.Cell>{patient.name}</Table.Cell>
-              <Table.Cell>{patient.gender}</Table.Cell>
-              <Table.Cell>{patient.occupation}</Table.Cell>
-              <Table.Cell>
-                <HealthRatingBar showText={false} rating={1} />
-              </Table.Cell>
-            </Table.Row>
-          </Table.Body>
-        </Table> */}
+        </Container> 
       </div>
     );
   } else {

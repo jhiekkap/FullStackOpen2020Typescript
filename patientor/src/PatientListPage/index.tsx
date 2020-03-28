@@ -7,7 +7,7 @@ import AddPatientModal from "../AddPatientModal";
 import { Patient } from "../types";
 import { apiBaseUrl } from "../constants";
 import HealthRatingBar from "../components/HealthRatingBar";
-import { useStateValue } from "../state";
+import { useStateValue, addPatient, updatePatient } from "../state";
 
 const PatientListPage: React.FC = () => {
   const [{ patients }, dispatch] = useStateValue();
@@ -29,7 +29,7 @@ const PatientListPage: React.FC = () => {
         `${apiBaseUrl}/patients`,
         values
       );
-      dispatch({ type: "ADD_PATIENT", payload: newPatient });
+      dispatch(addPatient(newPatient));
       closeModal();
     } catch (e) {
       console.error(e.response.data);
@@ -41,9 +41,8 @@ const PatientListPage: React.FC = () => {
     let patient: Patient | undefined = Object.values(patients).find((patient: Patient) => patient.id === id)
     if (!patient || (patient && !patient.ssn)) {
       const { data: DBpatient } = await axios.get<Patient>(`${apiBaseUrl}/patients/${id}`);
-      //console.log('DBPATIENT', DBpatient)
-      dispatch({ type: "UPDATE_PATIENT", payload: DBpatient });
-    }  
+      dispatch(updatePatient(DBpatient));
+    }
     history.push(`/patients/${id}`)
   }
 
