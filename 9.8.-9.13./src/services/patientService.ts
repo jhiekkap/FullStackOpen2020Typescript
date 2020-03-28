@@ -14,13 +14,12 @@ const getEntryById = (id:string): PatientEntry | undefined=> {
 };
 
 const getNonSensitiveEntries = (): NonSensitivePatientEntry[] => {
-    return patients.map(({ id, name, dateOfBirth, gender, occupation, entries }) => ({
+    return patients.map(({ id, name, dateOfBirth, gender, occupation}) => ({
         id,
         name,
         dateOfBirth,
         gender,
-        occupation, 
-        entries
+        occupation 
     }));
 };
 
