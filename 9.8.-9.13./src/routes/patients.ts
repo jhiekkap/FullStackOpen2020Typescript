@@ -13,7 +13,7 @@ router.get('/:id', (req, res) => {
   res.send(patientService.getEntryById(id));
 })
 
-router.post('/', (req, res) => {
+router.post('/', (req, res) => { 
   try {
     const newPatientEntry = toNewPatientEntry(req.body);
     const addedEntry = patientService.addPatient(newPatientEntry);
@@ -21,6 +21,16 @@ router.post('/', (req, res) => {
   } catch (e) {
     res.status(400).send(e.message);
   }
+});
+
+router.post('/:id/entries', (req, res) => { 
+  /* try {
+    const newPatientEntry = toNewPatientEntry(req.body);
+    const addedEntry = patientService.addPatient(newPatientEntry);
+    res.json(addedEntry);
+  } catch (e) {
+    res.status(400).send(e.message);
+  } */
 });
 
 export default router;

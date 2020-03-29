@@ -6,7 +6,7 @@ import { Diagnosis, Gender } from "../types";
 // structure of a single option
 export type GenderOption = {
   value: Gender;
-  label: string;
+  label: string; 
 };
 
 // props for select field component

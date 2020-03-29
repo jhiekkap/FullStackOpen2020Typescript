@@ -19,7 +19,7 @@ const getNonSensitiveEntries = (): NonSensitivePatientEntry[] => {
         name,
         dateOfBirth,
         gender,
-        occupation 
+        occupation  
     }));
 };
 
