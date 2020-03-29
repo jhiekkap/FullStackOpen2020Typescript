@@ -1,4 +1,7 @@
-import { NewPatient, Gender } from './types';
+import {
+    NewPatient, Gender, NewHospitalEntry, NewOccupationalHealthcareEntry,
+    NewHealthCheckEntry, Diagnosis, Discharge, HealthCheckRating, SickLeave
+} from './types';
 
 
 const isString = (text: any): text is string => {
@@ -48,6 +51,120 @@ const parseOccupation = (occupation: any): string => {
     return occupation;
 };
 
+
+const parseSpecialist = (specialist: any): string | undefined => {
+    if (!isString(specialist)) {
+        throw new Error('Incorrect specialist: ' + specialist);
+    }
+    return specialist;
+}
+
+
+const parseDiagnosisCodes = (diagnosisCodes: any): Array<Diagnosis['code']> | undefined => {
+    if (!Array.isArray(diagnosisCodes) || (Array.isArray(diagnosisCodes) && diagnosisCodes.find(code => !isString(code)).length > 0)) {
+        throw new Error('Incorrect diagnosisCodes: ' + diagnosisCodes);
+    }
+    return diagnosisCodes;
+}
+
+const parseType = (type: any): 'Hospital' | 'HealthCheck' | 'OccupationalHealthcare' => {
+    if (!['Hospital', 'HealthCheck', 'OccupationalHealthcare'].includes(type)) {
+        throw new Error('Incorrect type: ' + type);
+    }
+    return type;
+}
+
+const parseDate = (date: any): string => {
+    if (!date || !isString(date) || !isDate(date)) {
+        throw new Error('Incorrect or missing date: ' + date);
+    }
+    return date;
+};
+
+const parseDescription = (description: any): string => {
+    if (!description || !isString(description)) {
+        throw new Error('Incorrect or missing description: ' + description)
+    }
+    return description;
+};
+
+const parseDischarge = (discharge: any): Discharge => {
+    if (!discharge || !discharge.date || !isString(discharge.date) || !isDate(discharge.date)
+        || !discharge.criteria || !isString(discharge.criteria)) {
+        throw new Error('Incorrect or missing discharge: ' + discharge)
+    }
+    return discharge;
+};
+
+const parseHealthCheckRating = (healthCheckRating: any): HealthCheckRating => {
+    if (!healthCheckRating || isNaN(healthCheckRating) || healthCheckRating < 0
+        || healthCheckRating > 4 || !Number.isInteger(healthCheckRating)) {
+        throw new Error('Incorrect or missing healthCheckRating: ' + healthCheckRating)
+    }
+    return healthCheckRating;
+};
+
+const parseEmployerName = (employerName: any): string => {
+    if (!employerName || !isString(employerName)) {
+        throw new Error('Incorrect or missing employerName: ' + employerName)
+    }
+    return employerName;
+};
+
+const parseSickLeave = (sickLeave: any): SickLeave => {
+    if (!sickLeave || !sickLeave.startDate || !isString(sickLeave.startDate) || !isDate(sickLeave.startDate)
+        || !sickLeave.endDate || !isString(sickLeave.endDate) || !isDate(sickLeave.endDate)) {
+        throw new Error('Incorrect or missing sickLeave: ' + sickLeave)
+    }
+    return sickLeave;
+};
+
+
+
+export const toNewEntry = (object: any): NewHospitalEntry | NewOccupationalHealthcareEntry | NewHealthCheckEntry | undefined => {
+    const baseFields = {
+        type: parseType(object.type),
+        date: parseDate(object.date),
+        description: parseDescription(object.description),
+        specialist: parseSpecialist(object.specialist),
+        diagnosisCodes: parseDiagnosisCodes(object.diagnosisCodes)
+    } 
+
+    const hospitalFields = {
+        ...baseFields,
+        discharge: parseDischarge(object.discharge)
+    } 
+
+    const HealthCheckFields = {
+        ...baseFields,
+        healthCheckRating: parseHealthCheckRating(object.healthCheckRating)
+    }
+
+    const occupationalFields = {
+        ...baseFields,
+        employerName: parseEmployerName(object.employerName),
+        sickLeave: parseSickLeave(object.sickLeave) 
+    }
+ 
+    switch (object.type) {
+        case 'Hospital':
+            return {
+                ...hospitalFields, type: "Hospital"
+            }
+        case 'HealthCheck':
+            return {
+                ...HealthCheckFields, type: "HealthCheck"
+            }
+        case 'OccupationalHealthcare':
+            return {
+                ...occupationalFields, type: "OccupationalHealthcare"
+            }
+        default:
+            return undefined
+    }
+
+}
+
 const toNewPatient = (object: any): NewPatient => {
     return {
         name: parseName(object.name),
@@ -58,5 +175,6 @@ const toNewPatient = (object: any): NewPatient => {
         entries: object.entries
     };
 };
+ 
 export default toNewPatient;
 

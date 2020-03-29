@@ -32,7 +32,7 @@ interface BaseEntry {
   id: string;
   description: string;
   date: string;
-  specialist: string;
+  specialist?: string;
   diagnosisCodes?: Array<Diagnosis['code']>;
 
 }
@@ -49,7 +49,7 @@ export interface HospitalEntry extends BaseEntry {
 
 export interface OccupationalHealthcareEntry extends BaseEntry {
   type: "OccupationalHealthcare";
-  sickLeave: SickLeave;
+  sickLeave?: SickLeave;
   employerName: string;
 }
 
@@ -65,5 +65,5 @@ export interface Patient {
   gender: Gender;
   ssn?: string;
   dateOfBirth?: string;
-  entries: Entry[]
+  entries?: Entry[]
 }

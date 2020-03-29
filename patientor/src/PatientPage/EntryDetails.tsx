@@ -12,7 +12,7 @@ interface BasicCardProps {
     type: string;
     date: string;
     description: string;
-    specialist: string;
+    specialist?: string;
     diagnosisCodes?: Array<Diagnosis['code']>;
     diagnoses: { [code: string]: Diagnosis };
 }

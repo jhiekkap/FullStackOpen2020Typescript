@@ -23,14 +23,15 @@ router.post('/', (req, res) => {
   }
 });
 
-router.post('/:id/entries', (_req, _res) => {
-  /* try {
-    const newPatient = toNewPatient(req.body);
-    const addedEntry = patientService.addPatient(newPatient);
-    res.json(addedEntry);
+router.post('/:id/entries', (req, res) => {
+  try {
+    const entry = req.body ;
+    const { id } = req.params;
+    const upDatedPatient = patientService.addEntry(id, entry);
+    res.json(upDatedPatient);
   } catch (e) {
     res.status(400).send(e.message);
-  } */
+  }  
 });
 
 export default router;

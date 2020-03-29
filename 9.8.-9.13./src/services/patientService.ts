@@ -1,9 +1,13 @@
 //import patientData from '../../data/patients.json'
 import patientData from '../../data/patientData'
-import { Patient, NonSensitivePatientData, NewPatient } from '../types';
+import {
+    Patient, NonSensitivePatientData, NewPatient, Entry, NewHospitalEntry,
+    NewOccupationalHealthcareEntry, NewHealthCheckEntry,
+} from '../types';
 
 
-const patients: Array<Patient> = patientData as Array<Patient>;
+let patients: Array<Patient> = patientData as Array<Patient>;
+
 
 const getPatients = (): Array<Patient> => {
     return patients;
@@ -23,7 +27,7 @@ const getNonSensitivePatientData = (): NonSensitivePatientData[] => {
     }));
 };
 
-const makeId = function () {
+const makeId = (): string => {
     const chars = 'ABCDE23456789';
     let result = '';
     for (let i = 6; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
@@ -31,19 +35,32 @@ const makeId = function () {
 }
 
 const addPatient = (entry: NewPatient): Patient => {
-
-    const newPatient = {
-        id: makeId(),
-        ...entry
-    };
-
+    const newPatient: Patient = { id: makeId(), ...entry };
     patients.push(newPatient);
     return newPatient;
+}
+
+const addEntry = (id: string, newEntry: NewHospitalEntry |
+    NewOccupationalHealthcareEntry | NewHealthCheckEntry): Patient | void => {
+
+    const patientToUpdate: Patient | undefined = patients.find(patient => patient.id === id);
+    if (patientToUpdate) {
+        const entries: Entry[] = patientToUpdate.entries || []
+        const entry: Entry = { id: makeId(), ...newEntry }
+        const updatedPatient: Patient = {
+            ...patientToUpdate,
+            entries: entries.concat(entry)
+        };
+        patients = patients.map(patient => patient.id === id ? updatedPatient : patient)
+        console.log('UPDATED PATIENT', updatedPatient)
+        return updatedPatient;
+    }
 }
 
 export default {
     getPatients,
     getPatient,
     getNonSensitivePatientData,
-    addPatient
+    addPatient,
+    addEntry
 };
