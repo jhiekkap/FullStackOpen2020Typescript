@@ -2,7 +2,7 @@ import React from "react";
 import { CourseParts } from '../types'
 import Part from '../components/Part'
 
-const Content: React.FC<CourseParts> = (props) => {
+const Content: React.FC<CourseParts> = (props) => { 
 
     const assertNever = (value: never): never => {
         throw new Error(

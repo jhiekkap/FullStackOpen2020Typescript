@@ -12,14 +12,15 @@
                 "date": "2015-01-02",
                 "type": "Hospital",
                 "specialist": "MD House",
-                "diagnosisCodes": ["S62.5"],
-                "description":
-                  "Healing time appr. 2 weeks. patient doesn't remember how he got the injury.",
+                "diagnosisCodes": [
+                    "S62.5"
+                ],
+                "description": "Healing time appr. 2 weeks. patient doesn't remember how he got the injury.",
                 "discharge": {
-                  "date": "2015-01-16",
-                  "criteria": "Thumb has healed."
+                    "date": "2015-01-16",
+                    "criteria": "Thumb has healed."
                 }
-              }
+            }
         ]
     },
     {
@@ -29,21 +30,24 @@
         "ssn": "300179-77A",
         "gender": "male",
         "occupation": "Cop",
-        "entries":[
+        "entries": [
             {
                 "id": "fcd59fa6-c4b4-4fec-ac4d-df4fe1f85f62",
                 "date": "2019-08-05",
                 "type": "OccupationalHealthcare",
                 "specialist": "MD House",
                 "employerName": "HyPD",
-                "diagnosisCodes": ["Z57.1", "Z74.3", "M51.2"],
-                "description":
-                  "Patient mistakenly found himself in a nuclear plant waste site without protection gear. Very minor radiation poisoning. ",
+                "diagnosisCodes": [
+                    "Z57.1",
+                    "Z74.3",
+                    "M51.2"
+                ],
+                "description": "Patient mistakenly found himself in a nuclear plant waste site without protection gear. Very minor radiation poisoning. ",
                 "sickLeave": {
-                  "startDate": "2019-08-05",
-                  "endDate": "2019-08-28"
+                    "startDate": "2019-08-05",
+                    "endDate": "2019-08-28"
                 }
-              }
+            }
         ]
     },
     {
@@ -60,7 +64,31 @@
         "dateOfBirth": "1974-01-05",
         "ssn": "050174-432N",
         "gender": "female",
-        "occupation": "Forensic Pathologist"
+        "occupation": "Forensic Pathologist",
+        "entries": [
+            {
+                "id": "fcd59fa6-c4b4-4fec-ac4d-dfasdasds",
+                "date": "2019-10-20",
+                "type": "HealthCheck",
+                "description": "Yearly control visit. Cholesterol levels back to normal",
+                "healthCheckRating": 2
+            },
+            {
+                "id": "fcd59fa6-c4b4-4fec-ac4d-df4fe1f85f62",
+                "date": "2019-09-10",
+                "type": "OccupationalHealthcare",
+                "specialist": "Dr. Phil",
+                "employerName": "FBI",
+                "description": "Prescriptions renewed."
+            },
+            {
+                "id": "fcd59fa6-c4b4-4fec-ac4d-wewewsdasds",
+                "date": "2018-10-05",
+                "type": "HealthCheck",
+                "description": "Yearly control visit. Due to high cholesterol should eat more vegetables.",
+                "healthCheckRating": 1
+            }
+        ]
     },
     {
         "id": "d2773c6e-f723-11e9-8f0b-362b9e155667",
