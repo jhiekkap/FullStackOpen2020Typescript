@@ -9,7 +9,7 @@ interface CardProps {
 }
 
 interface BasicCardProps {
-    type:string;
+    type: string;
     date: string;
     description: string;
     specialist: string;
@@ -17,7 +17,7 @@ interface BasicCardProps {
     diagnoses: { [code: string]: Diagnosis };
 }
 
-const icons:any = {
+const icons: any = {
     'Hospital': 'hospital',
     'OccupationalHealthcare': 'fork',
     'HealthCheck': 'check'
@@ -28,10 +28,11 @@ const BasicCard: React.FC<BasicCardProps> = (props) => {
     return (
         <Card>
             <Card.Content>
-                <Card.Header>{date}{' '}<Icon name={icons[type]}/></Card.Header>
-                <Card.Meta>
-                    Specialist: {specialist}
-                </Card.Meta>
+                <Card.Header>{date}{' '}<Icon name={icons[type]} /></Card.Header>
+                {specialist &&
+                    <Card.Meta>
+                        Specialist: {specialist}
+                    </Card.Meta>}
                 <Card.Description>
                     Description:  {description}
                 </Card.Description>
@@ -86,7 +87,7 @@ const HealthCheckEntryCard: React.FC<{ entry: HealthCheckEntry, diagnoses: { [co
     const { healthCheckRating, ...basics } = entry
     return (
         <BasicCard {...basics} diagnoses={diagnoses}>
-             <HealthRatingBar showText={false} rating={healthCheckRating}/>
+            <HealthRatingBar showText={false} rating={healthCheckRating} />
         </BasicCard>
     )
 }
