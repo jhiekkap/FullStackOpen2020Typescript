@@ -1,25 +1,25 @@
 //import patientData from '../../data/patients.json'
-import patientEntries from '../../data/patientEntries'
-import { PatientEntry, NonSensitivePatientEntry, NewPatientEntry } from '../types';
+import patientData from '../../data/patientData'
+import { Patient, NonSensitivePatientData, NewPatient } from '../types';
 
 
-const patients: Array<PatientEntry> = patientEntries as Array<PatientEntry>;
+const patients: Array<Patient> = patientData as Array<Patient>;
 
-const getEntries = (): Array<PatientEntry> => {
+const getPatients = (): Array<Patient> => {
     return patients;
 };
 
-const getEntryById = (id:string): PatientEntry | undefined=> {
-    return patients.find(patient => patient.id === id); 
+const getPatient = (id: string): Patient | undefined => {
+    return patients.find(patient => patient.id === id);
 };
 
-const getNonSensitiveEntries = (): NonSensitivePatientEntry[] => {
-    return patients.map(({ id, name, dateOfBirth, gender, occupation}) => ({
+const getNonSensitivePatientData = (): NonSensitivePatientData[] => {
+    return patients.map(({ id, name, dateOfBirth, gender, occupation }) => ({
         id,
         name,
         dateOfBirth,
         gender,
-        occupation  
+        occupation
     }));
 };
 
@@ -30,20 +30,20 @@ const makeId = function () {
     return result;
 }
 
-const addPatient = (entry: NewPatientEntry): PatientEntry => {
+const addPatient = (entry: NewPatient): Patient => {
 
-    const newPatientEntry = {
+    const newPatient = {
         id: makeId(),
         ...entry
     };
 
-    patients.push(newPatientEntry);
-    return newPatientEntry;
+    patients.push(newPatient);
+    return newPatient;
 }
 
 export default {
-    getEntries,
-    getEntryById,
-    getNonSensitiveEntries,
+    getPatients,
+    getPatient,
+    getNonSensitivePatientData,
     addPatient
 };

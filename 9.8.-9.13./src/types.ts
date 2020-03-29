@@ -50,7 +50,7 @@ export type Entry =
     | OccupationalHealthcareEntry
     | HealthCheckEntry;
 
-export interface PatientEntry {
+export interface Patient {
     id: string;
     name: string;
     dateOfBirth: string;
@@ -60,9 +60,9 @@ export interface PatientEntry {
     entries: Entry[]
 }
 
-export type NonSensitivePatientEntry = Omit<PatientEntry, 'ssn' | 'entries'>;
+export type NonSensitivePatientData = Omit<Patient, 'ssn' | 'entries'>;
 
-export type NewPatientEntry = Omit<PatientEntry, 'id'>;
+export type NewPatient = Omit<Patient, 'id'>;
 
 export enum Gender {
     Male = 'male',
