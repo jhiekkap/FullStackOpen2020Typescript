@@ -58,10 +58,11 @@ const HospitalEntryCard: React.FC<{ entry: HospitalEntry, diagnoses: { [code: st
     const { discharge, ...basics } = entry
     return (
         <BasicCard {...basics} diagnoses={diagnoses}>
-            {discharge && <Container>
-                <p>Discharged: {discharge.date}</p>
-                <p>Criteria: {discharge.criteria}</p>
-            </Container>}
+            {discharge &&
+                <Container>
+                    <p>Discharged: {discharge.date}</p>
+                    <p>Criteria: {discharge.criteria}</p>
+                </Container>}
         </BasicCard>
     )
 }
@@ -74,7 +75,7 @@ const OccupationalHealthcareEntryCard: React.FC<{ entry: OccupationalHealthcareE
             {sickLeave &&
                 <Container>
                     Sick leave:
-                <ul>
+                    <ul>
                         <li>From: {sickLeave.startDate}</li>
                         <li>To: {sickLeave.endDate}</li>
                     </ul>

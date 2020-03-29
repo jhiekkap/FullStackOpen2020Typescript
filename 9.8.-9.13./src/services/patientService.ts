@@ -4,11 +4,9 @@ import {
     Patient, NonSensitivePatientData, NewPatient, Entry, NewHospitalEntry,
     NewOccupationalHealthcareEntry, NewHealthCheckEntry,
 } from '../types';
-
-
+ 
 let patients: Array<Patient> = patientData as Array<Patient>;
-
-
+ 
 const getPatients = (): Array<Patient> => {
     return patients;
 };
@@ -41,8 +39,7 @@ const addPatient = (entry: NewPatient): Patient => {
 }
 
 const addEntry = (id: string, newEntry: NewHospitalEntry |
-    NewOccupationalHealthcareEntry | NewHealthCheckEntry): Patient | void => {
-
+    NewOccupationalHealthcareEntry | NewHealthCheckEntry): Patient | void => { 
     const patientToUpdate: Patient | undefined = patients.find(patient => patient.id === id);
     if (patientToUpdate) {
         const entries: Entry[] = patientToUpdate.entries || []

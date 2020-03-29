@@ -50,8 +50,7 @@ const parseOccupation = (occupation: any): string => {
     }
     return occupation;
 };
-
-
+ 
 const parseSpecialist = (specialist: any): string | undefined => {
     if (!isString(specialist)) {
         throw new Error('Incorrect specialist: ' + specialist);
@@ -59,7 +58,7 @@ const parseSpecialist = (specialist: any): string | undefined => {
     return specialist;
 }
 
-
+ 
 const parseDiagnosisCodes = (diagnosisCodes: any): Array<Diagnosis['code']> | undefined => {
     if (!Array.isArray(diagnosisCodes) || (Array.isArray(diagnosisCodes) && diagnosisCodes.find(code => !isString(code)).length > 0)) {
         throw new Error('Incorrect diagnosisCodes: ' + diagnosisCodes);
@@ -119,8 +118,7 @@ const parseSickLeave = (sickLeave: any): SickLeave => {
     return sickLeave;
 };
 
-
-
+ 
 export const toNewEntry = (object: any): NewHospitalEntry | NewOccupationalHealthcareEntry | NewHealthCheckEntry | undefined => {
     const baseFields = {
         type: parseType(object.type),
@@ -135,7 +133,7 @@ export const toNewEntry = (object: any): NewHospitalEntry | NewOccupationalHealt
         discharge: parseDischarge(object.discharge)
     } 
 
-    const HealthCheckFields = {
+    const healthCheckFields = {
         ...baseFields,
         healthCheckRating: parseHealthCheckRating(object.healthCheckRating)
     }
@@ -153,7 +151,7 @@ export const toNewEntry = (object: any): NewHospitalEntry | NewOccupationalHealt
             }
         case 'HealthCheck':
             return {
-                ...HealthCheckFields, type: "HealthCheck"
+                ...healthCheckFields, type: "HealthCheck"
             }
         case 'OccupationalHealthcare':
             return {
@@ -164,6 +162,7 @@ export const toNewEntry = (object: any): NewHospitalEntry | NewOccupationalHealt
     }
 
 }
+
 
 const toNewPatient = (object: any): NewPatient => {
     return {
