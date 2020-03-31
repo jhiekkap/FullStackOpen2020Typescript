@@ -15,7 +15,7 @@ const initialState: State = {
 
 export const StateContext = createContext<[State, React.Dispatch<Action>]>([
   initialState,
-  () => initialState
+  () => initialState 
 ]);
 
 type StateProviderProps = {

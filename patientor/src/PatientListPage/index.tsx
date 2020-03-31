@@ -13,6 +13,8 @@ const PatientListPage: React.FC = () => {
   const [{ patients }, dispatch] = useStateValue();
   let history = useHistory()
 
+  console.log('PATIENTS', patients)
+
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string | undefined>();
 

@@ -3,14 +3,18 @@ import { Grid, Button } from "semantic-ui-react";
 import { Field, Formik, Form } from "formik";
 import { useStateValue } from "../state";
 import { TextField, SelectField, TypeOption, DiagnosisSelection, NumberField } from "./FormField";
-import { Entry, EntryType } from "../types";
+import { HospitalEntry, HealthCheckEntry, OccupationalHealthcareEntry } from "../types";
 
 
 /*
  * use type Patient, but omit id and entries,
  * because those are irrelevant for new patient object.
  */
-export type EntryFormValues = Omit<Entry, "id" | "entries">;
+type HospitalEntryValues = Omit<HospitalEntry, "id">;
+type HealthCheckEntryFormValues = Omit<HealthCheckEntry, "id">;
+type OccupationalHealthcareEntryFormValues = Omit<OccupationalHealthcareEntry, "id">;
+export type EntryFormValues = HospitalEntryValues | HealthCheckEntryFormValues | OccupationalHealthcareEntryFormValues
+
 
 interface Props {
   onSubmit: (values: EntryFormValues) => void;
@@ -19,13 +23,14 @@ interface Props {
 
 
 const typeOptions: TypeOption[] = [
-  { value: EntryType.Hospital, label: "Hospital" },
-  { value: EntryType.HealthCheck, label: "HealthCheck" },
-  { value: EntryType.OccupationalHealthcare, label: "OccupationalHealthcare" }
+  { value: "Hospital", label: "Hospital" },
+  { value: "HealthCheck", label: "HealthCheck" },
+  { value: "OccupationalHealthcare", label: "OccupationalHealthcare" }
 ];
 
-export const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
+export const AddEntryForm: React.FC<any> = ({ onSubmit, onCancel }) => {
   const [{ diagnoses }] = useStateValue();
+
 
   return (
     <Formik
@@ -34,8 +39,17 @@ export const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
         date: '',
         description: '',
         specialist: '',
-        /*  dischargeDate: '',
-         criteria: '', */
+        diagnosisCodes: [],
+        discharge: {
+          date: '',
+          criteria: ''
+        },
+        healthCheckRating: 0,
+        sickLeave: {
+          startDate: '',
+          endDate: ''
+        },
+        employerName: ''
       }}
       onSubmit={onSubmit}
       validate={values => {
@@ -54,6 +68,9 @@ export const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
       }}
     >
       {({ isValid, dirty, values, ...props }) => {
+
+        console.log('ENTRY FORM VALUES', values)
+
         return (
           <Form className="form ui">
             <SelectField
@@ -85,13 +102,13 @@ export const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
                 <Field
                   label="Date"
                   placeholder="YYYY-MM-DD"
-                  name="discharge"
+                  name="discharge.date"
                   component={TextField}
                 />
                 <Field
                   label="Criteria"
                   placeholder="Criteria"
-                  name="criteria"
+                  name="discharge.criteria"
                   component={TextField}
                 />
               </div>}
@@ -104,18 +121,18 @@ export const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
                 min={0}
                 max={4}
               />}
-              {values.type === 'OccupationalHealthcare' &&
+            {values.type === 'OccupationalHealthcare' &&
               <div> SickLeave
                 <Field
                   label="Start Date"
                   placeholder="YYYY-MM-DD"
-                  name="startDate"
+                  name="sickLeave.startDate"
                   component={TextField}
                 />
                 <Field
                   label="End Date"
                   placeholder="YYYY-MM-DD"
-                  name="endDate"
+                  name="sickLeave.endDate"
                   component={TextField}
                 />
                 <Field

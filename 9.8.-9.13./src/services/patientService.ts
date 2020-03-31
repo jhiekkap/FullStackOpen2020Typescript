@@ -25,7 +25,7 @@ const getNonSensitivePatientData = (): NonSensitivePatientData[] => {
     }));
 };
 
-const makeId = (): string => {
+const makeId = (): string => { 
     const chars = 'ABCDE23456789';
     let result = '';
     for (let i = 6; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];

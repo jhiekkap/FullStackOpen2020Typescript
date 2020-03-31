@@ -1,35 +1,40 @@
 import React from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { useStateValue } from "../state";
+import { useStateValue, updatePatient } from "../state";
 import { Icon, Container, Button } from "semantic-ui-react";
 import { Patient } from "../types";
 import EntryDetails from './EntryDetails'
 import AddEntryModal from './AddEntryModal'
+import { apiBaseUrl } from "../constants";
+import { EntryFormValues } from "./AddEntryForm";
+
 
 
 const PatientPage: React.FC = () => {
 
-  const [{ patients, diagnoses }] = useStateValue();
+  const [{ patients, diagnoses }, dispatch] = useStateValue();
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string | undefined>();
+
+  let { id }: any = useParams();
+  let patient: Patient | undefined = Object.values(patients).find((patient: Patient) => patient.id === id);
 
 
   console.log('DIAGNOOSIT', diagnoses)
 
-  const submitNewPatient = (props:any) => {
-    /*  try {
-       const { data: newPatient } = await axios.post<Patient>(
-         `${apiBaseUrl}/patients`,
-         values
-       );
-       dispatch(addPatient(newPatient));
-       closeModal();
-     } catch (e) {
-       console.error(e.response.data);
-       setError(e.response.data.error);
-     } */
-    alert(JSON.stringify(props ))
+  const submitNewEntry = async (values: EntryFormValues) => {
+    try {
+      const { data: updatedPatient } = await axios.post<Patient>(
+        `${apiBaseUrl}/patients/${id}/entries`,
+        values
+      );
+      dispatch(updatePatient(updatedPatient));
+      closeModal();
+    } catch (e) {
+      console.error(e.response.data);
+      setError(e.response.data.error);
+    }
   }
 
   const openModal = (): void => setModalOpen(true);
@@ -40,8 +45,6 @@ const PatientPage: React.FC = () => {
   };
 
 
-  let { id }: any = useParams();
-  const patient: Patient | undefined = Object.values(patients).find((patient: Patient) => patient.id === id);
 
   if (patient) {
     return (
@@ -57,7 +60,7 @@ const PatientPage: React.FC = () => {
         <Button onClick={openModal}>Add entry</Button>
         <AddEntryModal
           modalOpen={modalOpen}
-          onSubmit={submitNewPatient}
+          onSubmit={submitNewEntry}
           error={error}
           onClose={closeModal}
         />
