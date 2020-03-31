@@ -3,7 +3,7 @@ import { Grid, Button } from "semantic-ui-react";
 import { Field, Formik, Form } from "formik";
 import { useStateValue } from "../state";
 import { TextField, SelectField, TypeOption, DiagnosisSelection, NumberField } from "./FormField";
-import { HospitalEntry, HealthCheckEntry, OccupationalHealthcareEntry } from "../types";
+import { EntryType, HealthCheckRating, HospitalEntry, HealthCheckEntry, OccupationalHealthcareEntry } from "../types";
 
 
 /*
@@ -23,19 +23,19 @@ interface Props {
 
 
 const typeOptions: TypeOption[] = [
-  { value: "Hospital", label: "Hospital" },
-  { value: "HealthCheck", label: "HealthCheck" },
-  { value: "OccupationalHealthcare", label: "OccupationalHealthcare" }
+  { value: EntryType.Hospital, label: "Hospital" },
+  { value: EntryType.HealthCheck, label: "HealthCheck" },
+  { value: EntryType.OccupationalHealthcare, label: "OccupationalHealthcare" }
 ];
 
-export const AddEntryForm: React.FC<any> = ({ onSubmit, onCancel }) => {
+export const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
   const [{ diagnoses }] = useStateValue();
 
 
   return (
     <Formik
       initialValues={{
-        type: 'Hospital',
+        type: EntryType.Hospital,
         date: '',
         description: '',
         specialist: '',
@@ -44,7 +44,7 @@ export const AddEntryForm: React.FC<any> = ({ onSubmit, onCancel }) => {
           date: '',
           criteria: ''
         },
-        healthCheckRating: 0,
+        healthCheckRating: HealthCheckRating.Healthy,
         sickLeave: {
           startDate: '',
           endDate: ''
