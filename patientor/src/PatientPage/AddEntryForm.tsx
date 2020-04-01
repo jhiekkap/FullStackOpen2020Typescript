@@ -3,7 +3,7 @@ import { Grid, Button } from "semantic-ui-react";
 import { Field, Formik, Form } from "formik";
 import { useStateValue } from "../state";
 import { TextField, SelectField, TypeOption, DiagnosisSelection, NumberField } from "./FormField";
-import { EntryType, HealthCheckRating, HospitalEntry, HealthCheckEntry, OccupationalHealthcareEntry } from "../types";
+import {  /* Discharge, SickLeave, */ EntryType, HealthCheckRating, HospitalEntry, HealthCheckEntry, OccupationalHealthcareEntry } from "../types";
 
 
 /*
@@ -21,12 +21,20 @@ interface Props {
   onCancel: () => void;
 }
 
+//type ErrorObject =  Discharge | SickLeave
+
+
 
 const typeOptions: TypeOption[] = [
   { value: EntryType.Hospital, label: "Hospital" },
   { value: EntryType.HealthCheck, label: "HealthCheck" },
   { value: EntryType.OccupationalHealthcare, label: "OccupationalHealthcare" }
 ];
+
+const validateDate = (date: string) => {
+  const YYYY_MM_DDregex = /([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/
+  return YYYY_MM_DDregex.test(date)
+}
 
 export const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
   const [{ diagnoses }] = useStateValue();
@@ -54,15 +62,46 @@ export const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
       onSubmit={onSubmit}
       validate={values => {
         const requiredError = "Field is required";
-        const errors: { [field: string]: string } = {};
+        const dateFormatError = 'Incorrect date format';
+        const errors: { [field: string]: string | any } = {};
         if (!values.date) {
-          errors.name = requiredError;
+          errors.date = requiredError;
         }
+        if (values.date && !validateDate(values.date)) {
+          errors.date = dateFormatError;
+        } 
         if (!values.description) {
-          errors.ssn = requiredError;
+          errors.description = requiredError;
         }
-        if (!values.description) {
-          errors.dateOfBirth = requiredError;
+        if (values.type === EntryType.Hospital) {
+          if (!values.discharge.date || !values.discharge.criteria) {
+            errors.discharge = {};
+          }
+          if (!values.discharge.date) {
+            errors.discharge.date = requiredError;
+          }
+          if (values.discharge.date && !validateDate(values.discharge.date)) {
+            errors.discharge.date = dateFormatError;
+          }
+          if (!values.discharge.criteria) {
+            errors.discharge.criteria = requiredError;
+          }
+        } else if (values.type === EntryType.HealthCheck) {
+          if (!values.healthCheckRating) {
+            errors.healthCheckRating = requiredError;
+          }
+        } else {  
+          if (values.sickLeave.startDate && !validateDate(values.sickLeave.startDate)) {
+            errors.sickLeave = {};
+            errors.sickLeave.startDate = dateFormatError;
+          } 
+          if (values.sickLeave.endDate && !validateDate(values.sickLeave.endDate)) {
+            errors.sickLeave = {};
+            errors.sickLeave.endDate = dateFormatError;
+          }
+          if (!values.employerName) {
+            errors.employerName = requiredError;
+          }
         }
         return errors;
       }}
@@ -154,7 +193,7 @@ export const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
                   type="submit"
                   floated="right"
                   color="green"
-                  disabled={!dirty || !isValid}
+                //disabled={!dirty || !isValid}
                 >
                   Add
                 </Button>

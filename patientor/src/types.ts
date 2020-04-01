@@ -26,12 +26,12 @@ export enum HealthCheckRating {
 //export type EntryType = 'Hospital' | 'HealthCheck' | 'OccupationalHealthcare'
 
 
-interface Discharge {
+export interface Discharge {
   date: string;
   criteria: string;
 }
 
-interface SickLeave {
+export interface SickLeave {
   startDate: string;
   endDate: string;
 }
