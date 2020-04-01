@@ -100,7 +100,7 @@ export const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
           const { discharge, ...rest } = errors
           errors = rest
         }
-        if (_.isEmpty(errors.sickLeave)) {
+        if (Object.entries(errors.sickLeave).length === 0) {
           const { sickLeave, ...rest } = errors
           errors = rest
         }
