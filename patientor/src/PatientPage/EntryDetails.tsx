@@ -36,7 +36,7 @@ const BasicCard: React.FC<BasicCardProps> = (props) => {
                 <Card.Description>
                     Description:  {description}
                 </Card.Description>
-                {diagnosisCodes &&
+                {diagnosisCodes && diagnosisCodes.length > 0 &&
                     <Container>
                         Diagnoses:
                        <ul>
@@ -72,7 +72,7 @@ const OccupationalHealthcareEntryCard: React.FC<{ entry: OccupationalHealthcareE
     return (
         <BasicCard {...basics} diagnoses={diagnoses}>
             <p>Employer: {employerName}</p>
-            {sickLeave &&
+            {sickLeave && sickLeave.startDate && sickLeave.endDate&&
                 <Container>
                     Sick leave:
                     <ul>
@@ -88,7 +88,7 @@ const HealthCheckEntryCard: React.FC<{ entry: HealthCheckEntry, diagnoses: { [co
     const { healthCheckRating, ...basics } = entry
     return (
         <BasicCard {...basics} diagnoses={diagnoses}>
-            <HealthRatingBar showText={false} rating={healthCheckRating} />
+            <HealthRatingBar showText={true} rating={healthCheckRating} />
         </BasicCard>
     )
 }

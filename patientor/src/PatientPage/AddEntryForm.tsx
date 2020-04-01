@@ -3,8 +3,8 @@ import { Grid, Button } from "semantic-ui-react";
 import { Field, Formik, Form } from "formik";
 import { useStateValue } from "../state";
 import { TextField, SelectField, TypeOption, DiagnosisSelection, NumberField } from "./FormField";
-import {  /* Discharge, SickLeave, */ EntryType, HealthCheckRating, HospitalEntry, HealthCheckEntry, OccupationalHealthcareEntry } from "../types";
-
+import { EntryType, HealthCheckRating, HospitalEntry, HealthCheckEntry, OccupationalHealthcareEntry } from "../types";
+ 
 
 /*
  * use type Patient, but omit id and entries,
@@ -21,15 +21,12 @@ interface Props {
   onCancel: () => void;
 }
 
-//type ErrorObject =  Discharge | SickLeave
-
-
-
 const typeOptions: TypeOption[] = [
   { value: EntryType.Hospital, label: "Hospital" },
   { value: EntryType.HealthCheck, label: "HealthCheck" },
   { value: EntryType.OccupationalHealthcare, label: "OccupationalHealthcare" }
 ];
+
 
 const validateDate = (date: string) => {
   const YYYY_MM_DDregex = /([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/
@@ -38,7 +35,6 @@ const validateDate = (date: string) => {
 
 export const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
   const [{ diagnoses }] = useStateValue();
-
 
   return (
     <Formik
@@ -63,20 +59,19 @@ export const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
       validate={values => {
         const requiredError = "Field is required";
         const dateFormatError = 'Incorrect date format';
-        const errors: { [field: string]: string | any } = {};
+        let errors: { [field: string]: string | { [key: string]: string } } = {};
+        errors.discharge = {};
+        errors.sickLeave = {};
         if (!values.date) {
           errors.date = requiredError;
         }
         if (values.date && !validateDate(values.date)) {
           errors.date = dateFormatError;
-        } 
+        }
         if (!values.description) {
           errors.description = requiredError;
         }
         if (values.type === EntryType.Hospital) {
-          if (!values.discharge.date || !values.discharge.criteria) {
-            errors.discharge = {};
-          }
           if (!values.discharge.date) {
             errors.discharge.date = requiredError;
           }
@@ -90,19 +85,26 @@ export const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
           if (!values.healthCheckRating) {
             errors.healthCheckRating = requiredError;
           }
-        } else {  
+        } else {
           if (values.sickLeave.startDate && !validateDate(values.sickLeave.startDate)) {
-            errors.sickLeave = {};
             errors.sickLeave.startDate = dateFormatError;
-          } 
+          }
           if (values.sickLeave.endDate && !validateDate(values.sickLeave.endDate)) {
-            errors.sickLeave = {};
             errors.sickLeave.endDate = dateFormatError;
           }
           if (!values.employerName) {
             errors.employerName = requiredError;
           }
         }
+        if (Object.entries(errors.discharge).length === 0) {
+          const { discharge, ...rest } = errors
+          errors = rest
+        }
+        if (_.isEmpty(errors.sickLeave)) {
+          const { sickLeave, ...rest } = errors
+          errors = rest
+        }
+        console.log('ENTRY FORM ERRORS', errors)
         return errors;
       }}
     >
@@ -158,7 +160,7 @@ export const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
                 name="healthCheckRating"
                 component={NumberField}
                 min={0}
-                max={4}
+                max={3}
               />}
             {values.type === 'OccupationalHealthcare' &&
               <div> SickLeave

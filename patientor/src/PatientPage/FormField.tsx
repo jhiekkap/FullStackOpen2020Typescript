@@ -4,12 +4,14 @@ import { Dropdown, DropdownProps, Form } from "semantic-ui-react";
 import { Diagnosis, EntryType } from "../types";
 
 // structure of a single option
- 
+
 
 export type TypeOption = {
   value: EntryType;
   label: string;
 };
+
+ 
 
 // props for select field component
 type SelectFieldProps = {
