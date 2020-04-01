@@ -1,5 +1,5 @@
 import React from "react";
-import { Entry, Diagnosis, HospitalEntry, HealthCheckEntry, OccupationalHealthcareEntry } from "../types";
+import { Entry, EntryType, Diagnosis, HospitalEntry, HealthCheckEntry, OccupationalHealthcareEntry } from "../types";
 import { Container, Card, Icon } from "semantic-ui-react";
 import HealthRatingBar from "../components/HealthRatingBar";
 
@@ -102,11 +102,11 @@ const EntryDetails: React.FC<CardProps> = ({ entry, diagnoses }) => {
     };
 
     switch (entry.type) {
-        case 'Hospital':
+        case EntryType.Hospital:
             return <HospitalEntryCard entry={entry} diagnoses={diagnoses} />;
-        case 'OccupationalHealthcare':
+        case EntryType.OccupationalHealthcare:
             return <OccupationalHealthcareEntryCard entry={entry} diagnoses={diagnoses} />;
-        case 'HealthCheck':
+        case EntryType.HealthCheck:
             return <HealthCheckEntryCard entry={entry} diagnoses={diagnoses} />;
         default:
             return assertNever(entry)
