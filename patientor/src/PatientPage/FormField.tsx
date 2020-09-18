@@ -10,7 +10,6 @@ export type TypeOption = {
   value: EntryType;
   label: string;
 };
-
  
 
 // props for select field component

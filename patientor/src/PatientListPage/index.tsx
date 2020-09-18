@@ -11,7 +11,7 @@ import { useStateValue, addPatient, updatePatient } from "../state";
 
 const PatientListPage: React.FC = () => {
   const [{ patients }, dispatch] = useStateValue();
-  let history = useHistory()
+  let history = useHistory();
 
   console.log('PATIENTS', patients)
 
@@ -22,7 +22,7 @@ const PatientListPage: React.FC = () => {
 
   const closeModal = (): void => {
     setModalOpen(false);
-    setError(undefined);
+    setError(undefined); 
   };
 
   const submitNewPatient = async (values: PatientFormValues) => {

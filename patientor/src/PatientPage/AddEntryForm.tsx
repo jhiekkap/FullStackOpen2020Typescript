@@ -4,7 +4,7 @@ import { Field, Formik, Form } from "formik";
 import { useStateValue } from "../state";
 import { TextField, SelectField, TypeOption, DiagnosisSelection, NumberField } from "./FormField";
 import { EntryType, HealthCheckRating, HospitalEntry, HealthCheckEntry, OccupationalHealthcareEntry } from "../types";
- 
+
 
 /*
  * use type Patient, but omit id and entries,
